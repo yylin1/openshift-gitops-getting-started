@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/name: spring-petclinic
     app.kubernetes.io/part-of: spring-petclinic
     app.openshift.io/runtime: java
-  name: spring-petclinic
+  name: user1-spring-petclinic
 spec:
   replicas: 1
   selector:

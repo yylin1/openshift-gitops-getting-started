@@ -9,5 +9,5 @@ roleRef:
   name: admin
 subjects:
 - kind: ServiceAccount
-  name: argocd-cluster-argocd-application-controller
+  name: user1-argocd-cluster-argocd-application-controller
   namespace: user1
