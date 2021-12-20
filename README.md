@@ -49,14 +49,14 @@ In the Argo CD dashboard, click on the **New App** button to add a new Argo CD a
 
 Enter the following details and click on **Create**.
 
-* Application Name: `cluster-configs`
+* Application Name: `user$數字-cluster-configs`
 * Project: `default`
 * Sync Policy: `Manual`
-* Repository URL: `https://github.com/siamaksade/openshift-gitops-getting-started`
-* Revision: `HEAD`
-* Path: `cluster`
+* Repository URL: `https://github.com/yylin1/openshift-gitops-getting-started.git`
+* Revision: `workshop`
+* Path: `cluster/user$數字`
 * Destination: `https://kubernetes.default.svc`
-* Namespace: `default`
+* Namespace: `user$數字`
 * Directory Recurse: `checked`
 
 ![Argo CD - Create Application](images/gitops-07.png)
@@ -67,7 +67,7 @@ Enter the following details and click on **Create**.
 >  ```
 > Run the following to review the created application:
 >  ```
->  oc get application -n openshift-gitops
+>  oc get application -n user$數字
 >  ```
 
 Looking at the Argo CD dashboard, you would notice that the **cluster-configs** Argo CD application is created by is out of sync, since we configured it with manual sync policy.
@@ -86,7 +86,7 @@ Now go back to the OpenShift Web Console and click on the **Application Launcher
 
 ![Argo CD - Cluster Config](images/gitops-11.png)
 
-You can also check that a namespace called `spring-petclinic` is created on the cluster.
+You can also check that a namespace called `user$數字-spring-petclinic` is created on the cluster.
 
 Now that the configuration sync is in place, any changes in the Git repository will be automatically detect by Argo CD and would change the status of the **cluster-configs** to `OutOfSync`, which implies a drift from the desired configuration. One can set the [sync policy to automated](https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/) in order for Argo CD to automatically roll out changes form Git repository to the cluster. 
 
@@ -100,15 +100,15 @@ In the Argo CD dashboard, click on the **New App** button to add a new Argo CD a
 
 Create a new Argo CD application by clicking on the **New App** button in the Argo CD dashboard and entering the following details.
 
-* Application Name: `spring-petclinic`
+* Application Name: `user$數字-spring-petclinic`
 * Project: `default`
 * Sync Policy: `Automatic`
 * Self-heal: `checked`
 * Repository URL: `https://github.com/siamaksade/openshift-gitops-getting-started`
-* Revision: `HEAD`
-* Path: `app`
+* Revision: `HEAD` #workshop
+* Path: `app/user$數字`
 * Destination: `https://kubernetes.default.svc`
-* Namespace: `spring-petclinic`
+* Namespace: `user$數字-spring-petclinic`
 * Directory Recurse: `checked`
 
 > You can also create the Argo CD application by importing the following file:
@@ -116,7 +116,7 @@ Create a new Argo CD application by clicking on the **New App** button in the Ar
 >  oc create -f argo/app.yaml
 >  ```
 
-Because we set up the sync policy to `Automatic`, as soon as the Argo CD application is created, a sync is started in order to rollout the Spring PetClinic manifests to the `spring-petclinic` namespace.
+Because we set up the sync policy to `Automatic`, as soon as the Argo CD application is created, a sync is started in order to rollout the Spring PetClinic manifests to the `user$數字-spring-petclinic` namespace.
 
 ![Argo CD - Spring PetClinic](images/gitops-15.png)
 
@@ -133,7 +133,7 @@ In oder to modify the Spring PetClinic deployment, all the user needs to do is t
 In addition, Argo CD constantly monitors the state of the deployed applications in order to detect drift and automatically correct it in this example, since we configured the Argo CD application with self-healing. Run the following command to modify the deployment on the cluster and scale it up to 2 pods while watching the application in the OpenShift Web Console:
 
 ```
-oc scale deployment spring-petclinic --replicas 2  -n spring-petclinic
+oc scale deployment spring-petclinic --replicas 2  -n user$數字-spring-petclinic
 ```
 
 You would notice that the deployment momentarily scales up to 2 pods and immediately scales down again to 1 pod as Argo CD detects a drift from the Git repository and auto-heals the application on the OpenShift cluster. This behavior can be controlled by the [Self-heal](https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/#automatic-self-healing) setting.
