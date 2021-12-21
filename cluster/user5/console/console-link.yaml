@@ -1,0 +1,11 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: application-menu-rh-gitops-workshop-user5
+spec:
+  href: 'https://k8s.ithome.com.tw/lab-page/553'
+  location: ApplicationMenu
+  text: User5 Menu - Red Hat OpenShift GitOps Workshop
+  applicationMenu:
+    section: User5 Menu - Red Hat OpenShift GitOps Workshop
+    imageURL: https://k8s.ithome.com.tw/2021/img/ithome-w.svg

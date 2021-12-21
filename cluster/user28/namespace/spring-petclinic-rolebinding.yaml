@@ -1,13 +1,13 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: user1-spring-petclinic-role-binding
-  namespace: user1-spring-petclinic
+  name: user28-spring-petclinic-role-binding
+  namespace: user28-spring-petclinic
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: admin
 subjects:
 - kind: ServiceAccount
-  name: user1-argocd-cluster-argocd-application-controller
-  namespace: user1
+  name: user28-argocd-cluster-argocd-application-controller
+  namespace: user28

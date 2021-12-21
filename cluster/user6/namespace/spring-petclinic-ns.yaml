@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: user6-spring-petclinic
+spec:
+  finalizers:
+  - kubernetes
