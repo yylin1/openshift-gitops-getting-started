@@ -28,17 +28,10 @@ Once OpenShift GitOps is installed, an instance of Argo CD is automatically inst
 
 ## Log into Argo CD dashboard
 
-Argo CD upon installation generates an initial admin password which is stored in a Kubernetes secret. In order to retrieve this password, run the following command to decrypt the admin password:
-
-```
-oc extract secret/openshift-gitops-cluster -n openshift-gitops --to=-
-```
-
-Click on Argo CD from the OpenShift Web Console application launcher and then log into Argo CD with `admin` username and the password retrieved from the previous step.
-
-![Argo CD](images/gitops-05.png)
-
+Click on Argo CD from the OpenShift Web Console application launcher and then `LOG IN VIA OPENSHIFT` Argo CD with username(`user${數字}`) and the password retrieved from the this step.
+![Argo CD](https://i.imgur.com/iDksITN.jpg)
 ![Argo CD](images/gitops-06.png)
+
 
 
 ## Configure OpenShift with Argo CD
@@ -54,12 +47,13 @@ Enter the following details and click on **Create**.
 * Sync Policy: `Manual`
 * Repository URL: `https://github.com/yylin1/openshift-gitops-getting-started.git`
 * Revision: `workshop`
-* Path: `cluster/user$數字`
+* Path: `cluster/user${數字}`
 * Destination: `https://kubernetes.default.svc`
-* Namespace: `user$數字`
+* Namespace: `user${數字}`
 * Directory Recurse: `checked`
 
 ![Argo CD - Create Application](images/gitops-07.png)
+
 
 > Argo CD applications can get configured declaratively by creating `Application` resources. As an alternative to the Argo CD dashboard, you can create the **cluster-configs** application by importing the following file:
 >  ```
@@ -85,6 +79,9 @@ Once the sync is completed successfully, you would see that Argo CD reports a th
 Now go back to the OpenShift Web Console and click on the **Application Launcher**. You would see that a new link is added which points at the [Red Hat Developer Blog](https://developers.redhat.com/topics/kubernetes) as the result of rolling out the content of the [cluster](cluster/) directory to the cluster. If curious, take a look inside the [cluster](cluster/) to find out which config enables adding links to the OpenShift Web Console!
 
 ![Argo CD - Cluster Config](images/gitops-11.png)
+![](https://i.imgur.com/hsnakRR.png)
+
+
 
 You can also check that a namespace called `user$數字-spring-petclinic` is created on the cluster.
 
@@ -105,8 +102,8 @@ Create a new Argo CD application by clicking on the **New App** button in the Ar
 * Sync Policy: `Automatic`
 * Self-heal: `checked`
 * Repository URL: `https://github.com/siamaksade/openshift-gitops-getting-started`
-* Revision: `HEAD` #workshop
-* Path: `app/user$數字`
+* Revision: `workshop` 
+* Path: `app/user${數字}`
 * Destination: `https://kubernetes.default.svc`
 * Namespace: `user$數字-spring-petclinic`
 * Directory Recurse: `checked`
@@ -133,7 +130,7 @@ In oder to modify the Spring PetClinic deployment, all the user needs to do is t
 In addition, Argo CD constantly monitors the state of the deployed applications in order to detect drift and automatically correct it in this example, since we configured the Argo CD application with self-healing. Run the following command to modify the deployment on the cluster and scale it up to 2 pods while watching the application in the OpenShift Web Console:
 
 ```
-oc scale deployment spring-petclinic --replicas 2  -n user$數字-spring-petclinic
+oc scale deployment user${數字}-spring-petclinic --replicas 2  -n user${數字}-spring-petclinic
 ```
 
 You would notice that the deployment momentarily scales up to 2 pods and immediately scales down again to 1 pod as Argo CD detects a drift from the Git repository and auto-heals the application on the OpenShift cluster. This behavior can be controlled by the [Self-heal](https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/#automatic-self-healing) setting.
