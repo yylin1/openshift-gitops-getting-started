@@ -101,7 +101,7 @@ Create a new Argo CD application by clicking on the **New App** button in the Ar
 * Project: `default`
 * Sync Policy: `Automatic`
 * Self-heal: `checked`
-* Repository URL: `https://github.com/siamaksade/openshift-gitops-getting-started`
+* Repository URL: `https://github.com/yylin1/openshift-gitops-getting-started.git`
 * Revision: `workshop` 
 * Path: `app/user${數字}`
 * Destination: `https://kubernetes.default.svc`
